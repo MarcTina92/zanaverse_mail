@@ -256,3 +256,27 @@ app_license = "mit"
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
 
+
+# --- Zanaverse Mail: active hooks ---
+
+scheduler_events = {
+	"cron": {
+		"*/5 * * * *": [
+			"zanaverse_mail.zanaverse_mail.graph_poll.poll_all_accounts"
+		]
+	}
+}
+
+override_whitelisted_methods = {
+	"frappe.core.doctype.communication.email.make": "zanaverse_mail.zanaverse_mail.email_override.make"
+}
+
+fixtures = [
+	{
+		"dt": "Custom Field",
+		"filters": [
+			["dt", "=", "Communication"],
+			["fieldname", "=", "custom_in_reply_to"]
+		]
+	}
+]

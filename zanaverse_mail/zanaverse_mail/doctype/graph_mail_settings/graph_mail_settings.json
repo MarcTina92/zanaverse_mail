@@ -1,0 +1,87 @@
+{
+ "actions": [],
+ "allow_bulk_edit": 1,
+ "allow_rename": 1,
+ "creation": "2026-08-31 17:34:10.651632",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "section_break_ujxp",
+  "enabled",
+  "tenant_id",
+  "client_id",
+  "client_secret",
+  "client_secret_expiry",
+  "poll_interval_minutes",
+  "last_poll_at"
+ ],
+ "fields": [
+  {
+   "fieldname": "section_break_ujxp",
+   "fieldtype": "Section Break"
+  },
+  {
+   "default": "0",
+   "fieldname": "enabled",
+   "fieldtype": "Check",
+   "label": "Enabled"
+  },
+  {
+   "fieldname": "tenant_id",
+   "fieldtype": "Data",
+   "label": "Tenant ID"
+  },
+  {
+   "fieldname": "client_id",
+   "fieldtype": "Data",
+   "label": "Client ID"
+  },
+  {
+   "fieldname": "client_secret",
+   "fieldtype": "Password",
+   "label": "Client Secret"
+  },
+  {
+   "fieldname": "client_secret_expiry",
+   "fieldtype": "Date",
+   "label": "Client Secret Expiry /"
+  },
+  {
+   "fieldname": "poll_interval_minutes",
+   "fieldtype": "Int",
+   "label": "Poll Interval (Minutes)"
+  },
+  {
+   "fieldname": "last_poll_at",
+   "fieldtype": "Datetime",
+   "label": "Last Poll At",
+   "read_only": 1
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "issingle": 1,
+ "links": [],
+ "modified": "2026-08-31 18:14:07.997540",
+ "modified_by": "Administrator",
+ "module": "Zanaverse Mail",
+ "name": "Graph Mail Settings",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "print": 1,
+   "read": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
