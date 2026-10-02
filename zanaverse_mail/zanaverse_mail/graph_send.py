@@ -16,6 +16,7 @@ import frappe
 from frappe.utils import now_datetime
 
 from zanaverse_mail.zanaverse_mail.graph_auth import get_access_token
+from zanaverse_mail.zanaverse_mail.signature import apply_signature
 
 GRAPH_BASE = "https://graph.microsoft.com/v1.0"
 
@@ -40,9 +41,13 @@ def send_mail(
     token = get_access_token()
     headers = {"Authorization": f"Bearer {token}", "Content-Type": "application/json"}
 
+    # Signature goes on the outgoing email only; the Communication below
+    # keeps the rep's own text so the CRM timeline stays uncluttered.
+    outgoing_html = apply_signature(body_html, account)
+
     draft_message = {
         "subject": subject,
-        "body": {"contentType": "HTML", "content": body_html},
+        "body": {"contentType": "HTML", "content": outgoing_html},
         "toRecipients": _to_recipients(to),
     }
     if cc:
