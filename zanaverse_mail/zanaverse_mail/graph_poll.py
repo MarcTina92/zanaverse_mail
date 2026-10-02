@@ -107,7 +107,7 @@ def _get_since_timestamp(account):
 
 def _local_to_utc(local_dt):
     import pytz
-    site_tz = frappe.utils.get_time_zone()
+    site_tz = frappe.utils.get_system_timezone()
     localized = pytz.timezone(site_tz).localize(local_dt)
     return localized.astimezone(pytz.utc).replace(tzinfo=None)
 
