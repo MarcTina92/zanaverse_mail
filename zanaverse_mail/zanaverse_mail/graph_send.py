@@ -16,7 +16,7 @@ import frappe
 from frappe.utils import now_datetime
 
 from zanaverse_mail.zanaverse_mail.graph_auth import get_access_token
-from zanaverse_mail.zanaverse_mail.signature import apply_signature
+from zanaverse_mail.zanaverse_mail.signature import apply_signature, embed_signature_images
 
 GRAPH_BASE = "https://graph.microsoft.com/v1.0"
 
@@ -44,10 +44,16 @@ def send_mail(
     # Signature goes on the outgoing email only; the Communication below
     # keeps the rep's own text so the CRM timeline stays uncluttered.
     outgoing_html = apply_signature(body_html, account)
+    try:
+        outgoing_html, inline_images = embed_signature_images(outgoing_html)
+    except Exception:
+        frappe.log_error(title="Graph Mail: embedding signature images failed")
+        inline_images = []
 
     draft_message = {
         "subject": subject,
         "body": {"contentType": "HTML", "content": outgoing_html},
+        "attachments": inline_images,
         "toRecipients": _to_recipients(to),
     }
     if cc:

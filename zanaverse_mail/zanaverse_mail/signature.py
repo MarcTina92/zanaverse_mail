@@ -97,3 +97,63 @@ def _quote_start(html):
         if m:
             starts.append(m.start())
     return min(starts) if starts else None
+
+
+# ---------------------------------------------------------------------------
+# Embedding the signature images in the email itself
+#
+# Outlook (mobile, web, new Outlook) loads remote images through Microsoft's
+# image proxy. When that fetch fails it shows "Image removed by sender", and
+# Exchange can bake that placeholder into the stored copy. Sending the images
+# inside the email as inline (cid:) attachments, the way Outlook's own
+# signatures do, means every client shows them without fetching anything.
+# ---------------------------------------------------------------------------
+
+IMG_CACHE_SECONDS = 24 * 60 * 60
+SIG_IMG_RE = r'src="({base}/(sig-[A-Za-z0-9_-]+\.png))"'
+
+
+def embed_signature_images(html):
+    """Swap the signature's hosted image URLs for cid: references.
+
+    Returns (html, attachments) where attachments is a list of Graph
+    fileAttachment dicts. If an image can't be fetched it keeps its URL,
+    so the email still sends exactly as before.
+    """
+    import base64
+
+    import requests
+
+    if SIG_MARKER not in (html or ""):
+        return html, []
+
+    settings = frappe.get_cached_doc("Graph Mail Settings")
+    base = (settings.get("signature_asset_base") or f"{get_url()}/files").rstrip("/")
+    pattern = SIG_IMG_RE.format(base=re.escape(base))
+
+    attachments = {}
+    for url, filename in set(re.findall(pattern, html)):
+        cache_key = f"zv_sig_img::{url}"
+        b64 = frappe.cache.get_value(cache_key)
+        if not b64:
+            try:
+                resp = requests.get(url, timeout=10)
+                if resp.status_code != 200 or not resp.headers.get("content-type", "").startswith("image/"):
+                    continue
+                b64 = base64.b64encode(resp.content).decode()
+                frappe.cache.set_value(cache_key, b64, expires_in_sec=IMG_CACHE_SECONDS)
+            except Exception:
+                continue
+
+        content_id = f"{filename}@zanaverse"
+        attachments[content_id] = {
+            "@odata.type": "#microsoft.graph.fileAttachment",
+            "name": filename,
+            "contentType": "image/png",
+            "contentBytes": b64,
+            "contentId": content_id,
+            "isInline": True,
+        }
+        html = html.replace(f'src="{url}"', f'src="cid:{content_id}"')
+
+    return html, list(attachments.values())
