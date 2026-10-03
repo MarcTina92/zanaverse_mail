@@ -1,0 +1,121 @@
+{#
+  Zanaverse email signature template (zanaverse_mail)
+  Replicates the MarcTina Outlook signature. Rendered per sender at send time.
+
+  Context variables (from User / Employee / Graph Mail Account):
+    full_name      e.g. "Joseph Akinola"
+    designation    e.g. "Managing Director"
+    entity_line    e.g. "MarcTina Managed Services | Part of MarcTina Group"
+    phone          e.g. "+447500045001"            (row hidden if empty)
+    email          e.g. "joseph@marctinaconsultancy.com"
+    website        e.g. "www.marctinaconsultancy.com"
+    location       e.g. "London, UK"                (row hidden if empty)
+    booking_url    Microsoft Bookings link           (hidden if empty)
+    booking_label  e.g. "Joseph's Booking Page"
+    asset_base     e.g. "https://mtc.zanaverse.com/files"  (PUBLIC files only)
+
+  Email-safe rules followed: tables for layout, inline styles only, PNG images
+  with explicit width/height and alt text, no SVG, no CSS classes, no web fonts.
+#}
+<table cellpadding="0" cellspacing="0" border="0" role="presentation"
+       style="border-collapse:collapse;font-family:Aptos,Calibri,Arial,sans-serif;color:#000000;">
+  <tr>
+    <td style="padding:0;font-size:15px;line-height:22px;font-weight:bold;">{{ full_name }}</td>
+  </tr>
+  {% if designation %}
+  <tr>
+    <td style="padding:0;font-size:14px;line-height:20px;">{{ designation }}</td>
+  </tr>
+  {% endif %}
+  {% if entity_line %}
+  <tr>
+    <td style="padding:2px 0 12px 0;font-size:16px;line-height:22px;">{{ entity_line }}</td>
+  </tr>
+  {% endif %}
+
+  <!-- top divider -->
+  <tr>
+    <td style="padding:0;">
+      <table cellpadding="0" cellspacing="0" border="0" role="presentation" width="480" style="border-collapse:collapse;">
+        <tr><td style="border-top:1px solid #272264;font-size:0;line-height:0;">&#8203;</td></tr>
+      </table>
+    </td>
+  </tr>
+
+  <!-- contact rows -->
+  <tr>
+    <td style="padding:12px 0;">
+      <table cellpadding="0" cellspacing="0" border="0" role="presentation" style="border-collapse:collapse;">
+        {% if phone %}
+        <tr>
+          <td width="28" style="padding:3px 8px 3px 0;vertical-align:middle;">
+            <img src="{{ asset_base }}/sig-icon-phone.png" width="18" height="18" alt="Tel" style="display:block;border:0;">
+          </td>
+          <td style="padding:3px 0;font-size:15px;line-height:20px;vertical-align:middle;">
+            <a href="tel:{{ phone | replace(' ', '') }}" style="color:#000000;text-decoration:none;">{{ phone }}</a>
+          </td>
+        </tr>
+        {% endif %}
+        <tr>
+          <td width="28" style="padding:3px 8px 3px 0;vertical-align:middle;">
+            <img src="{{ asset_base }}/sig-icon-email.png" width="18" height="18" alt="Email" style="display:block;border:0;">
+          </td>
+          <td style="padding:3px 0;font-size:15px;line-height:20px;vertical-align:middle;">
+            <a href="mailto:{{ email }}" style="color:#1F5BD8;text-decoration:underline;">{{ email }}</a>
+          </td>
+        </tr>
+        {% if website %}
+        <tr>
+          <td width="28" style="padding:3px 8px 3px 0;vertical-align:middle;">
+            <img src="{{ asset_base }}/sig-icon-web.png" width="18" height="18" alt="Web" style="display:block;border:0;">
+          </td>
+          <td style="padding:3px 0;font-size:15px;line-height:20px;vertical-align:middle;">
+            <a href="https://{{ website | replace('https://', '') | replace('http://', '') }}" style="color:#1F5BD8;text-decoration:underline;">{{ website }}</a>
+          </td>
+        </tr>
+        {% endif %}
+        {% if location %}
+        <tr>
+          <td width="28" style="padding:3px 8px 3px 0;vertical-align:middle;">
+            <img src="{{ asset_base }}/sig-icon-location.png" width="18" height="18" alt="Location" style="display:block;border:0;">
+          </td>
+          <td style="padding:3px 0;font-size:15px;line-height:20px;vertical-align:middle;">{{ location }}</td>
+        </tr>
+        {% endif %}
+      </table>
+    </td>
+  </tr>
+
+  <!-- bottom divider -->
+  <tr>
+    <td style="padding:0;">
+      <table cellpadding="0" cellspacing="0" border="0" role="presentation" width="480" style="border-collapse:collapse;">
+        <tr><td style="border-top:1px solid #272264;font-size:0;line-height:0;">&#8203;</td></tr>
+      </table>
+    </td>
+  </tr>
+
+  <!-- logos -->
+  <tr>
+    <td style="padding:16px 0 12px 0;">
+      <table cellpadding="0" cellspacing="0" border="0" role="presentation" style="border-collapse:collapse;">
+        <tr>
+          <td style="padding:0 28px 0 0;vertical-align:middle;">
+            <img src="{{ asset_base }}/sig-logo-marctina.png" width="150" height="59" alt="MarcTina Group" style="display:block;border:0;">
+          </td>
+          <td style="padding:0;vertical-align:middle;">
+            <img src="{{ asset_base }}/sig-logo-zanaverse.png" width="98" height="60" alt="Zanaverse" style="display:block;border:0;">
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+
+  {% if booking_url %}
+  <tr>
+    <td style="padding:4px 0 0 0;font-size:15px;line-height:20px;">
+      <a href="{{ booking_url }}" style="color:#3B6E80;text-decoration:underline;">{{ booking_label or "Book a meeting" }}</a>
+    </td>
+  </tr>
+  {% endif %}
+</table>

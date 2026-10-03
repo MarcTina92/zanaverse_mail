@@ -8,12 +8,24 @@
  "field_order": [
   "section_break_7qws",
   "user",
+  "full_name",
   "mailbox_email",
   "enabled",
   "last_delta_link",
   "last_sync_status",
   "last_error",
-  "last_poll_completed_at"
+  "last_poll_completed_at",
+  "signature_section",
+  "include_signature",
+  "sig_full_name",
+  "sig_designation",
+  "sig_entity_line",
+  "column_break_sig",
+  "sig_phone",
+  "sig_website",
+  "sig_location",
+  "sig_booking_url",
+  "sig_booking_label"
  ],
  "fields": [
   {
@@ -27,9 +39,19 @@
    "options": "User"
   },
   {
+   "fetch_from": "user.full_name",
+   "fieldname": "full_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Name",
+   "read_only": 1
+  },
+  {
    "fieldname": "mailbox_email",
    "fieldtype": "Data",
-   "label": "Mailbox Email"
+   "label": "Mailbox Email",
+   "in_list_view": 1,
+   "in_standard_filter": 1
   },
   {
    "default": "1",
@@ -59,12 +81,76 @@
    "fieldtype": "Datetime",
    "label": "Last Poll Completed At",
    "read_only": 1
+  },
+  {
+   "fieldname": "signature_section",
+   "fieldtype": "Section Break",
+   "label": "Email Signature",
+   "collapsible": 1
+  },
+  {
+   "default": "1",
+   "fieldname": "include_signature",
+   "fieldtype": "Check",
+   "label": "Add Signature to Sent Emails"
+  },
+  {
+   "fieldname": "sig_full_name",
+   "fieldtype": "Data",
+   "label": "Name",
+   "description": "Leave blank to use the Employee or User name"
+  },
+  {
+   "fieldname": "sig_designation",
+   "fieldtype": "Data",
+   "label": "Job Title",
+   "description": "Leave blank to use the Employee designation"
+  },
+  {
+   "fieldname": "sig_entity_line",
+   "fieldtype": "Data",
+   "label": "Company Line",
+   "description": "e.g. MarcTina Managed Services | Part of MarcTina Group"
+  },
+  {
+   "fieldname": "column_break_sig",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "sig_phone",
+   "fieldtype": "Data",
+   "label": "Phone",
+   "description": "Shown publicly. Leave blank to hide"
+  },
+  {
+   "fieldname": "sig_website",
+   "fieldtype": "Data",
+   "label": "Website",
+   "description": "Leave blank to use the default in Graph Mail Settings"
+  },
+  {
+   "fieldname": "sig_location",
+   "fieldtype": "Data",
+   "label": "Location",
+   "description": "e.g. London, UK"
+  },
+  {
+   "fieldname": "sig_booking_url",
+   "fieldtype": "Data",
+   "label": "Booking Page URL",
+   "description": "Microsoft Bookings link. Leave blank to hide"
+  },
+  {
+   "fieldname": "sig_booking_label",
+   "fieldtype": "Data",
+   "label": "Booking Link Text",
+   "description": "Defaults to “<First name>’s Booking Page”"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-09-03 12:35:03.448464",
+ "modified": "2026-10-02 17:00:00.000000",
  "modified_by": "Administrator",
  "module": "Zanaverse Mail",
  "name": "Graph Mail Account",
@@ -83,7 +169,10 @@
  ],
  "row_format": "Dynamic",
  "rows_threshold_for_grid_search": 20,
- "sort_field": "creation",
- "sort_order": "DESC",
- "states": []
+ "sort_field": "full_name",
+ "sort_order": "ASC",
+ "states": [],
+ "title_field": "full_name",
+ "show_title_field_in_link": 1,
+ "search_fields": "mailbox_email,user"
 }

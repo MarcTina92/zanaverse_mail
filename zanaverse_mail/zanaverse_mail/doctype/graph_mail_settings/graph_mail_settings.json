@@ -13,7 +13,10 @@
   "client_secret",
   "client_secret_expiry",
   "poll_interval_minutes",
-  "last_poll_at"
+  "last_poll_at",
+  "signature_section",
+  "signature_asset_base",
+  "signature_default_website"
  ],
  "fields": [
   {
@@ -56,13 +59,30 @@
    "fieldtype": "Datetime",
    "label": "Last Poll At",
    "read_only": 1
+  },
+  {
+   "fieldname": "signature_section",
+   "fieldtype": "Section Break",
+   "label": "Email Signature"
+  },
+  {
+   "fieldname": "signature_asset_base",
+   "fieldtype": "Data",
+   "label": "Signature Image Base URL",
+   "description": "Public folder holding the signature images, e.g. https://mtc.zanaverse.com/files"
+  },
+  {
+   "fieldname": "signature_default_website",
+   "fieldtype": "Data",
+   "label": "Default Website",
+   "description": "Used when a mail account has no website of its own"
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2026-08-31 18:14:07.997540",
+ "modified": "2026-10-02 13:00:00.000000",
  "modified_by": "Administrator",
  "module": "Zanaverse Mail",
  "name": "Graph Mail Settings",
