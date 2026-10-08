@@ -36,7 +36,8 @@
    "fieldname": "user",
    "fieldtype": "Link",
    "label": "User",
-   "options": "User"
+   "options": "User",
+   "permlevel": 1
   },
   {
    "fetch_from": "user.full_name",
@@ -44,43 +45,50 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Name",
-   "read_only": 1
+   "read_only": 1,
+   "permlevel": 1
   },
   {
    "fieldname": "mailbox_email",
    "fieldtype": "Data",
    "label": "Mailbox Email",
    "in_list_view": 1,
-   "in_standard_filter": 1
+   "in_standard_filter": 1,
+   "permlevel": 1
   },
   {
    "default": "1",
    "fieldname": "enabled",
    "fieldtype": "Check",
-   "label": "Enabled"
+   "label": "Enabled",
+   "permlevel": 1
   },
   {
    "fieldname": "last_delta_link",
    "fieldtype": "Long Text",
-   "label": "Last Delta Link"
+   "label": "Last Delta Link",
+   "permlevel": 1
   },
   {
    "fieldname": "last_sync_status",
    "fieldtype": "Select",
    "label": "Last Sync Status",
-   "options": "Success\nError"
+   "options": "Success\nError",
+   "permlevel": 1
   },
   {
    "fieldname": "last_error",
    "fieldtype": "Small Text",
    "label": "Last Error",
-   "read_only": 1
+   "read_only": 1,
+   "permlevel": 1
   },
   {
    "fieldname": "last_poll_completed_at",
    "fieldtype": "Datetime",
    "label": "Last Poll Completed At",
-   "read_only": 1
+   "read_only": 1,
+   "permlevel": 1
   },
   {
    "fieldname": "signature_section",
@@ -150,7 +158,7 @@
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-10-02 17:00:00.000000",
+ "modified": "2026-10-08 11:00:00.000000",
  "modified_by": "Administrator",
  "module": "Zanaverse Mail",
  "name": "Graph Mail Account",
@@ -165,6 +173,23 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "role": "System Manager",
+   "permlevel": 1,
+   "read": 1,
+   "write": 1
+  },
+  {
+   "role": "All",
+   "permlevel": 0,
+   "read": 1,
+   "write": 1
+  },
+  {
+   "role": "All",
+   "permlevel": 1,
+   "read": 1
   }
  ],
  "row_format": "Dynamic",

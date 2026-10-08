@@ -280,3 +280,11 @@ fixtures = [
 		]
 	}
 ]
+
+# Staff can edit only their own signature (see zanaverse_mail/permissions.py)
+permission_query_conditions = {
+	"Graph Mail Account": "zanaverse_mail.zanaverse_mail.permissions.graph_mail_account_query",
+}
+has_permission = {
+	"Graph Mail Account": "zanaverse_mail.zanaverse_mail.permissions.graph_mail_account_has_permission",
+}
